@@ -5,7 +5,16 @@ import XMonad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
+-- LAYOUT
 import XMonad.Layout.IndependentScreens
+  ( onCurrentScreen
+  , withScreens
+  , workspaces'
+  )
+import XMonad.Layout.Spacing (spacing)
+
+-- HOOKS
+import XMonad.Hooks.ManageDocks (avoidStruts)
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
@@ -93,7 +102,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) =
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
 
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = spacing 5 $ avoidStruts $ tiled ||| Mirror tiled ||| Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled = Tall nmaster delta ratio
